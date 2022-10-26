@@ -1,5 +1,6 @@
 use std::thread;
 use std::time::Duration;
+use colored::Colorize;
 use device_query::{DeviceQuery, DeviceState, Keycode};
 use rand::Rng;
 
@@ -143,11 +144,27 @@ fn main() {
         //Display map
         for column in &map {
             for cell in column {
-                print!("{}", cell);
+                match *cell {
+                    APPLE_CHAR => {
+                        print!("{}", cell.to_string().red());
+                    }
+                    SNAKE_CHAR => {
+                        print!("{}", cell.to_string().bright_yellow());
+                    }
+                    SNAKE_TAILS_CHAR => {
+                        print!("{}", cell.to_string().yellow());
+                    }
+                    WALL_CHAR => {
+                        print!("{}", cell.to_string().green());
+                    }
+                    _ => {
+                        print!("{}", cell);
+                    }
+                }
             }
             println!();
         }
-        println!("points: {}", points);
+        println!("points: {}", points.to_string().magenta());
 
         thread::sleep(Duration::from_millis(100));
         clearscreen::clear().expect("failed to clear screen");
